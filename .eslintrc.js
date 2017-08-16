@@ -14,12 +14,12 @@ module.exports = {
         },
         "sourceType": "module"
     },
-    "plugins": [ "react" ],
+    "plugins": ["react"],
     "rules": {
-        "indent": ["error", 4],
-        "linebreak-style": ["error","unix"],
-        "quotes": ["error","single"],
-        "semi": ["error","always"],
-        "no-console": ["warn", { "allow": ["info", "error"] }]
+
+        "linebreak-style": ["error", "unix"],
+        "quotes": ["error", "single"],
+        "semi": ["error", "always"],
+        "no-console": ["warn", {"allow": ["info", "error"]}]
     }
 };

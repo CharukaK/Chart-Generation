@@ -28,6 +28,7 @@
     "json-loader": "^0.5.7",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-table": "^6.5.3",
     "recharts": "^1.0.0-alpha.3"
   },
   "devDependencies": {
