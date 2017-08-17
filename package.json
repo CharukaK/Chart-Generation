@@ -24,12 +24,17 @@
   },
   "homepage": "https://github.com/CharukaK/Chart-Generation#readme",
   "dependencies": {
+    "d3-geo": "^1.6.4",
+    "d3-scale": "^1.0.6",
     "express": "^4.15.4",
     "json-loader": "^0.5.7",
+    "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-table": "^6.5.3",
-    "recharts": "^1.0.0-alpha.3"
+    "react-tooltip": "^3.3.0",
+    "recharts": "^1.0.0-alpha.3",
+    "topojson-client": "^3.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",

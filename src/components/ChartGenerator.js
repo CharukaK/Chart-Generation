@@ -19,6 +19,11 @@ import {
     ReferenceLine,
     Cell
 } from 'recharts';
+import Topographies from "./MapComponents/Topographies";
+import Map from "./MapComponents/Map";
+import Topography from "./MapComponents/Topography";
+import Markers from "./MapComponents/Markers";
+import Marker from "./MapComponents/Marker";
 
 class ChartGenerator extends React.Component {
 
@@ -249,7 +254,7 @@ class ChartGenerator extends React.Component {
                 <tr>
                     {
                         config.columns.map((column,i)=>{
-                            return(<th key={`tableHeader-${i}`} style={{backgroundColor: '#4CAF50',color: '#fff',textAlign: 'left',padding:8}}>{column}</th>);
+                            return(<th key={`tableHeader-${i}`} style={{backgroundColor: '#4CAF50',color: '#fff',textAlign: 'center',border:1,borderColor:'#ddd',padding:8}}>{column}</th>);
                         })
                     }
                 </tr>
@@ -259,7 +264,7 @@ class ChartGenerator extends React.Component {
                             <tr key={`tableRow-${i}`}>
                                 {config.columns.map(
                                     (column,k)=>(
-                                        <td key={`r-${i}-${k}`}>
+                                        <td key={`r-${i}-${k}`} style={{textAlign: 'center',border:1,borderColor:'#ddd',borderStyle:'solid'}}>
                                             {d[column]}
                                         </td>
                                     )
@@ -270,6 +275,67 @@ class ChartGenerator extends React.Component {
                 }
             </table>
 
+        );
+    }
+
+    mapGenerator(config,data){
+        return(
+            <Map width={800} height={900} config={{scale: 100}}>
+
+                <Topographies inbuiltMapType="world">
+                    {(topographies, projection) => topographies.map((topography, i) => (
+                        <Topography
+                            key={i}
+                            topography={topography}
+                            projection={projection}
+                            style={{
+                                default: {
+                                    fill: topography.id==='AUS' ? '#FF5722': '#ace9f1',
+                                    stroke: '#607D8B',
+                                    strokeWidth: 0.75,
+                                    outline: 'none',
+                                },
+                                hover: {
+                                    fill: '#607D8B',
+                                    stroke: '#607D8B',
+                                    strokeWidth: 0.75,
+                                    outline: 'none',
+                                },
+                                pressed: {
+                                    fill: '#FF5722',
+                                    stroke: '#607D8B',
+                                    strokeWidth: 0.75,
+                                    outline: 'none',
+                                },
+                            }}
+                            onClick={()=>{console.info(topography);}}
+                            tooltip={`Country ID : ${topography.id}`}
+                        />
+
+                    ))}
+                </Topographies>
+
+                <Markers>
+                    {this.data.map((city, i) => (
+                        <Marker
+                            key={i}
+                            marker={city}
+                        >
+                            <circle
+                                cx={0}
+                                cy={0}
+                                r={this.cityScale(city.population)}
+                                fill='#0DFFE7'
+                                stroke='#ffffff'
+                                strokeWidth={2}
+                            />
+
+                        </Marker>
+                    ))}
+                </Markers>
+
+
+            </Map>
         );
     }
 }
