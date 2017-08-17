@@ -19,11 +19,13 @@ import {
     ReferenceLine,
     Cell
 } from 'recharts';
-import Topographies from "./MapComponents/Topographies";
-import Map from "./MapComponents/Map";
-import Topography from "./MapComponents/Topography";
-import Markers from "./MapComponents/Markers";
-import Marker from "./MapComponents/Marker";
+import Topographies from './MapComponents/Topographies';
+import Map from './MapComponents/Map';
+import Topography from './MapComponents/Topography';
+import Markers from './MapComponents/Markers';
+import Marker from './MapComponents/Marker';
+import CountryInfo from './MapComponents/jsonMapFiles/countryInfo';
+import {scaleLinear} from 'd3-scale';
 
 class ChartGenerator extends React.Component {
 
@@ -74,6 +76,15 @@ class ChartGenerator extends React.Component {
                         this.genrateTable(this.props.config, this.props.data) :
                         null
                 }
+
+
+                {
+                    config.type==='map' ?
+                        this.mapGenerator(this.props.config,this.props.data) :
+                        null
+                }
+
+
 
             </div>
         );
@@ -158,6 +169,13 @@ class ChartGenerator extends React.Component {
     }
 
 
+
+    /**
+     * This function gives the color based on a value to the given range and domain*/
+    mapColorScale(domainValues,colors){
+        return scaleLinear().domain(domainValues).range(colors);
+    }
+
     StackedAreaChart(config, data) {
         return (
             <AreaChart stackOffset={config.stackOffSet || 'none'} width={this.state.width} height={this.state.height}
@@ -226,6 +244,22 @@ class ChartGenerator extends React.Component {
 
 
 
+    /**
+     * This function converts the country name into
+     * Alpha - 3 code in case a whole country name is given
+     **/
+    convertCountryNamesToCode(countryName){
+
+        if(countryName.length === 3){
+            return countryName;
+        }else {
+            return CountryInfo[CountryInfo.map(x=>x.name).indexOf(countryName)]['alpha-3'];
+        }
+
+
+
+    }
+
     generatePieChart(config, data) {
         return (
             <PieChart width={this.state.width} height={this.state.height}>
@@ -278,9 +312,24 @@ class ChartGenerator extends React.Component {
         );
     }
 
-    mapGenerator(config,data){
+
+    /**
+     * This function generates a map to the given configuration
+     * */
+    mapGenerator(mapConfig,data){
+        let trans=null;
+
+        switch (mapConfig.charts.type){
+            case 'world':
+                trans={scale:100};
+                break;
+            default:
+                console.error('mapTypeNotSupported');
+                return;
+        }
+
         return(
-            <Map width={800} height={900} config={{scale: 100}}>
+            <Map width={800} height={900} config={trans} legend={mapConfig.charts.colors}>
 
                 <Topographies inbuiltMapType="world">
                     {(topographies, projection) => topographies.map((topography, i) => (
@@ -290,13 +339,14 @@ class ChartGenerator extends React.Component {
                             projection={projection}
                             style={{
                                 default: {
-                                    fill: topography.id==='AUS' ? '#FF5722': '#ace9f1',
+                                    fill: data.filter(e=>this.convertCountryNamesToCode(e.country)===topography.id).length>0 ?
+                                                        this.mapColorScale(mapConfig.charts.colors.domain,mapConfig.charts.colors.range)(data.filter(e=>this.convertCountryNamesToCode(e.country)===topography.id)[0].population):'#607D8B',
                                     stroke: '#607D8B',
                                     strokeWidth: 0.75,
                                     outline: 'none',
                                 },
                                 hover: {
-                                    fill: '#607D8B',
+                                    fill: '#000000',
                                     stroke: '#607D8B',
                                     strokeWidth: 0.75,
                                     outline: 'none',
@@ -309,30 +359,30 @@ class ChartGenerator extends React.Component {
                                 },
                             }}
                             onClick={()=>{console.info(topography);}}
-                            tooltip={`Country ID : ${topography.id}`}
+                            tooltip={'hello'}
                         />
 
                     ))}
                 </Topographies>
 
-                <Markers>
-                    {this.data.map((city, i) => (
-                        <Marker
-                            key={i}
-                            marker={city}
-                        >
-                            <circle
-                                cx={0}
-                                cy={0}
-                                r={this.cityScale(city.population)}
-                                fill='#0DFFE7'
-                                stroke='#ffffff'
-                                strokeWidth={2}
-                            />
+                {/*<Markers>*/}
+                    {/*{this.data.map((city, i) => (*/}
+                        {/*<Marker*/}
+                            {/*key={i}*/}
+                            {/*marker={city}*/}
+                        {/*>*/}
+                            {/*<circle*/}
+                                {/*cx={0}*/}
+                                {/*cy={0}*/}
+                                {/*r={this.cityScale(city.population)}*/}
+                                {/*fill='#0DFFE7'*/}
+                                {/*stroke='#ffffff'*/}
+                                {/*strokeWidth={2}*/}
+                            {/*/>*/}
 
-                        </Marker>
-                    ))}
-                </Markers>
+                        {/*</Marker>*/}
+                    {/*))}*/}
+                {/*</Markers>*/}
 
 
             </Map>
@@ -373,7 +423,7 @@ class CustomizedPieChartLabel extends React.Component {
         const y = cy  + (outerRadius+20) * Math.sin(-midAngle * RADIAN);
 
         return (
-            <text x={x} y={y} fill="#000" textAnchor={x > cx ? 'start' : 'end'} 	dominantBaseline="central">
+            <text x={x} y={y} fill="#000" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
                 {`${name} :${(percent * 100).toFixed(0)}%`}
             </text>
         );

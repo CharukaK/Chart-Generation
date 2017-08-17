@@ -45,9 +45,17 @@ class App extends React.Component {
         {name: '40', uv: -50, pv: 186}
     ];
 
-    pieChartData={
+    mapData = [
+        {'country': 'ABW', 'population': 103000},
+        {'country': 'Afghanistan', 'population': 22720000},
+        {'country': 'Ecuador', 'population': 12646000},
+        {'country': 'Egypt', 'population': 68470000},
+        {'country': 'Eritrea', 'population': 6250000},
+        {'country': 'Western Sahara', 'population': 293000},
+        {'country': 'Spain', 'population': 39441700},
+        {'country' : 'China', 'population' : 1277558000}
+    ];
 
-    };
 
     scatterData01 = [{x: 100, y: 200, z: 200}, {x: 120, y: 100, z: 260},
         {x: 170, y: 300, z: 400}, {x: 140, y: 250, z: 280},
@@ -65,6 +73,7 @@ class App extends React.Component {
         {name: 'Page F', uv: 2390, pv: 3800, amt: 2500},
         {name: 'Page G', uv: 3490, pv: 4300, amt: 2100},
     ];
+
 
     lineChartConfig = {
         type: 'line',
@@ -129,13 +138,13 @@ class App extends React.Component {
 
     };
 
-    pieChartConfig= {
+    pieChartConfig = {
         type: 'pie',
         stackOffSet: 'none',
         width: 800,
         height: 450,
-        innerRadius:60,
-        outerRadius:120,
+        innerRadius: 60,
+        outerRadius: 120,
 
 
     };
@@ -145,28 +154,63 @@ class App extends React.Component {
         width: 800,
         height: 450,
         charts: [
-            {type: 'scatter', shape: 'circle',name:'School A', data:0, fill: '#8884d8'},
-            {type: 'scatter', shape: 'circle',name:'School B' ,data:1, fill: '#82ca9d'}
+            {type: 'scatter', shape: 'circle', name: 'School A', data: 0, fill: '#8884d8'},
+            {type: 'scatter', shape: 'circle', name: 'School B', data: 1, fill: '#82ca9d'}
         ],
         axis: {
-            xAxis: {dataKey: 'x', name: 'stature', unit: 'cm', label: 'page', minTickGap: 1, tickAngle: -35,type:'number'},
+            xAxis: {
+                dataKey: 'x',
+                name: 'stature',
+                unit: 'cm',
+                label: 'page',
+                minTickGap: 1,
+                tickAngle: -35,
+                type: 'number'
+            },
             yAxis: {dataKey: 'y', name: 'weight', unit: 'kg', label: 'value'},
-            zAxis:{dataKey:'z', range:[60,400],name:'score', unit:'km' }
+            zAxis: {dataKey: 'z', range: [60, 400], name: 'score', unit: 'km'}
         }
 
     };
 
-    pieChartData={
-        pieData:[{name: 'Group A', value: 400}, {name: 'Group B', value: 300},
+    pieChartData = {
+        pieData: [{name: 'Group A', value: 400}, {name: 'Group B', value: 300},
             {name: 'Group C', value: 300}, {name: 'Group D', value: 200}],
-        colors:['#0088FE', '#00C49F', '#FFBB28', '#FF8042']
+        colors: ['#0088FE', '#00C49F', '#FFBB28', '#FF8042']
     };
 
-    tableConfig={
-        type:'table',
-        width:800,
-        height:400,
-        columns:['name','pv','uv']
+    tableConfig = {
+        type: 'table',
+        width: 800,
+        height: 400,
+        columns: ['name', 'pv', 'uv']
+    };
+
+    mapConfig = {
+        type: 'map',
+        width: 800,
+        height: 400,
+        charts: {
+            type: 'world',
+            x: 'country',
+            y: 'population',
+            colors: {
+                domain: [0, 100000000, 1400000000],
+                range: ['#02dc00', '#fffe00', '#ff0010']
+            },
+            hover: {
+                fill: '#607D8B',
+                stroke: '#607D8B',
+                strokeWidth: 0.75,
+                outline: 'none',
+            },
+            pressed: {
+                fill: '#FF5722',
+                stroke: '#607D8B',
+                strokeWidth: 0.75,
+                outline: 'none',
+            }
+        }
     };
 
     render() {
@@ -190,7 +234,7 @@ class App extends React.Component {
                 </div>
                 <div>
                     <h1>Scatter Chart stacked</h1>
-                    <ChartGenerator config={this.scatterChartConfig} data={[this.scatterData01,this.scatterData02]}/>
+                    <ChartGenerator config={this.scatterChartConfig} data={[this.scatterData01, this.scatterData02]}/>
                 </div>
                 <div>
                     <h1>Pie Chart</h1>
@@ -199,6 +243,11 @@ class App extends React.Component {
                 <div>
                     <h1>Table Chart</h1>
                     <ChartGenerator config={this.tableConfig} data={this.data}/>
+                </div>
+
+                <div>
+                    <h1>Map Chart</h1>
+                    <ChartGenerator config={this.mapConfig} data={this.mapData}/>
                 </div>
             </div>
         );
