@@ -1,8 +1,9 @@
 import React from 'react';
 import ChartGenerator from './ChartGenerator';
+import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,Bar,BarChart} from 'recharts';
 
 class App extends React.Component {
-
+    //*******************SAMPLE DATA**************************
     data = [
         {name: '1', uv: 300, pv: 456},
         {name: '2', uv: -145, pv: 230},
@@ -53,9 +54,30 @@ class App extends React.Component {
         {'country': 'Eritrea', 'population': 6250000},
         {'country': 'Western Sahara', 'population': 293000},
         {'country': 'Spain', 'population': 39441700},
-        {'country' : 'China', 'population' : 1277558000}
+        {'country' : 'China', 'population' : 1277558000},
+
     ];
 
+    data1 = [
+        {name: 'Page A', uv: 2000, pv: 5000, amt: 2400},
+        {name: 'Page B', uv: 2000, pv: 1398, amt: 2210},
+        {name: 'Page C', uv: 2000, pv: 9800, amt: 2290},
+        {name: 'Page D', uv: 2780, pv: 3908, amt: 2000},
+        {name: 'Page E', uv: 1890, pv: 4800, amt: 2181},
+        {name: 'Page F', uv: 2390, pv: 3800, amt: 2500},
+        {name: 'Page G', uv: 3490, pv: 4300, amt: 2100},
+        {name: 'Page A', uv: 4000, pv: 2400, amt: 2400},
+        {name: 'Page B', uv: 4000, pv: 9000, amt: 2210},
+        {name: 'Page C', uv: 2738, pv: 1728, amt: 2290},
+        {name: 'Page D', uv: 1283, pv: 2039, amt: 2000},
+        {name: 'Page E', uv: 3000, pv: 2357, amt: 2181},
+        {name: 'Page F', uv: 4568, pv: 5000, amt: 2500},
+        {name: 'Page G', uv: 7890, pv: 7890, amt: 2100}
+    ];
+
+
+
+    keys2=['Page A','Page B','Page C','Page D','Page E','Page F','Page G'];
 
     scatterData01 = [{x: 100, y: 200, z: 200}, {x: 120, y: 100, z: 260},
         {x: 170, y: 300, z: 400}, {x: 140, y: 250, z: 280},
@@ -64,16 +86,17 @@ class App extends React.Component {
         {x: 190, y: 290, z: 250}, {x: 198, y: 250, z: 210},
         {x: 180, y: 280, z: 260}, {x: 210, y: 220, z: 230}];
 
-    data1 = [
-        {name: 'Page A', uv: 4000, pv: 2400, amt: 2400},
-        {name: 'Page B', uv: 3000, pv: 1398, amt: 2210},
-        {name: 'Page C', uv: 2000, pv: 9800, amt: 2290},
-        {name: 'Page D', uv: 2780, pv: 3908, amt: 2000},
-        {name: 'Page E', uv: 1890, pv: 4800, amt: 2181},
-        {name: 'Page F', uv: 2390, pv: 3800, amt: 2500},
-        {name: 'Page G', uv: 3490, pv: 4300, amt: 2100},
-    ];
 
+    pieChartData = {
+        pieData: [{name: 'Group A', value: 400}, {name: 'Group B', value: 300},
+            {name: 'Group C', value: 300}, {name: 'Group D', value: 200}],
+        colors: ['#0088FE', '#00C49F', '#FFBB28', '#FF8042']
+    };
+
+    //**********************END OF SAMPLE DATA*******************************
+
+
+    //*************************CHART CONFIGS**************************************
 
     lineChartConfig = {
         type: 'line',
@@ -149,6 +172,22 @@ class App extends React.Component {
 
     };
 
+    areaChartStackedConfig = {
+        type: 'stack-area',
+        stackOffSet: 'none',
+        width: 800,
+        height: 450,
+        charts: [
+            {type: 'area', lineStyle: 'linear', field: 'pv', fill: '#8884d8', stack: 'stack1'},
+            {type: 'area', lineStyle: 'linear', field: 'uv', fill: '#82ca9d', stack: 'stack1'}
+        ],
+        axis: {
+            xAxis: {dataKey: 'name', label: 'page', minTickGap: 1, tickAngle: -35},
+            yAxis: {label: 'value'}
+        }
+
+    };
+
     scatterChartConfig = {
         type: 'scatter',
         width: 800,
@@ -173,11 +212,7 @@ class App extends React.Component {
 
     };
 
-    pieChartData = {
-        pieData: [{name: 'Group A', value: 400}, {name: 'Group B', value: 300},
-            {name: 'Group C', value: 300}, {name: 'Group D', value: 200}],
-        colors: ['#0088FE', '#00C49F', '#FFBB28', '#FF8042']
-    };
+
 
     tableConfig = {
         type: 'table',
@@ -191,7 +226,7 @@ class App extends React.Component {
         width: 800,
         height: 400,
         charts: {
-            type: 'world',
+            type: 'europe',
             x: 'country',
             y: 'population',
             colors: {
@@ -213,7 +248,17 @@ class App extends React.Component {
         }
     };
 
+    //********************************END OF CHART CONFIGS****************************************
+
     render() {
+        let test=this.data1.map((elem,i)=>{
+           let e={};
+           e['uv']=elem.uv;
+           e[''+elem.name]=elem.pv;
+
+           return e;
+        });
+        console.info(test);
         return (
             <div>
                 <div>
@@ -233,6 +278,10 @@ class App extends React.Component {
                     <ChartGenerator config={this.barChartStackedConfig} data={this.data}/>
                 </div>
                 <div>
+                    <h1>Area Chart stacked</h1>
+                    <ChartGenerator config={this.areaChartStackedConfig} data={this.data}/>
+                </div>
+                <div>
                     <h1>Scatter Chart stacked</h1>
                     <ChartGenerator config={this.scatterChartConfig} data={[this.scatterData01, this.scatterData02]}/>
                 </div>
@@ -248,6 +297,36 @@ class App extends React.Component {
                 <div>
                     <h1>Map Chart</h1>
                     <ChartGenerator config={this.mapConfig} data={this.mapData}/>
+                </div>
+                <div>
+                    <LineChart width={2000} height={300} data={test}
+                               margin={{top: 5, right: 30, left: 20, bottom: 5}}>
+                        <XAxis dataKey="uv" type='number' />
+                        <YAxis />
+                        <CartesianGrid strokeDasharray="3 3"/>
+                        <Tooltip/>
+                        <Legend />
+                        {/*<Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{r: 8}}/>*/}
+                        {/*<Line type="monotone" dataKey="uv" stroke="#82ca9d" />*/}
+                        {this.keys2.map((k,i)=>{
+                           return <Line connectNulls={true} key={'anemanda'+i} type="monotone" dataKey={k} stroke="#82ca9d" />;
+                        })}
+                        {/*<Line type="monotone" dataKey="uv" stroke="#82ca9d" />*/}
+                    </LineChart>
+
+                    <BarChart width={2000} height={300} data={test}
+                              margin={{top: 5, right: 30, left: 20, bottom: 5}}>
+                        <XAxis dataKey="uv" />
+                        <YAxis/>
+                        <CartesianGrid strokeDasharray="3 3"/>
+                        <Tooltip/>
+                        <Legend />
+                        {this.keys2.map((k,i)=>{
+                            return  <Bar key={'barEka'+i} dataKey={k} fill="#82ca9d" />;
+                        })}
+                        {/*<Bar dataKey="pv" fill="#8884d8" />*/}
+                        {/*<Bar dataKey="uv" fill="#82ca9d" />*/}
+                    </BarChart>
                 </div>
             </div>
         );
