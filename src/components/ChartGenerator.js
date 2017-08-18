@@ -22,8 +22,6 @@ import {
 import Topographies from './MapComponents/Topographies';
 import Map from './MapComponents/Map';
 import Topography from './MapComponents/Topography';
-import Markers from './MapComponents/Markers';
-import Marker from './MapComponents/Marker';
 import CountryInfo from './MapComponents/jsonMapFiles/countryInfo';
 import {scaleLinear} from 'd3-scale';
 

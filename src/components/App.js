@@ -3,7 +3,7 @@ import ChartGenerator from './ChartGenerator';
 import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,Bar,BarChart} from 'recharts';
 
 class App extends React.Component {
-    //*******************SAMPLE DATA**************************
+    /*******************SAMPLE DATA**************************/
     data = [
         {name: '1', uv: 300, pv: 456},
         {name: '2', uv: -145, pv: 230},
@@ -93,10 +93,10 @@ class App extends React.Component {
         colors: ['#0088FE', '#00C49F', '#FFBB28', '#FF8042']
     };
 
-    //**********************END OF SAMPLE DATA*******************************
+    /**********************END OF SAMPLE DATA*******************************/
 
 
-    //*************************CHART CONFIGS**************************************
+    /*************************CHART CONFIGS**************************************/
 
     lineChartConfig = {
         type: 'line',
@@ -248,7 +248,7 @@ class App extends React.Component {
         }
     };
 
-    //********************************END OF CHART CONFIGS****************************************
+    /********************************END OF CHART CONFIGS****************************************/
 
     render() {
         let test=this.data1.map((elem,i)=>{
