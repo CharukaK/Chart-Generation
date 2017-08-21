@@ -46,6 +46,17 @@ class App extends React.Component {
         {name: '40', uv: -50, pv: 186}
     ];
 
+    dataSet1 = {
+        metadata:{
+            names:['name','uv','pv'],
+            types:['ordinal','linear','linear']
+        },
+        data:[
+            {name: '1', uv: 300, pv: 456},
+            {name: '2', uv: -145, pv: 230},
+        ]
+    };
+
     mapData = [
         {'country': 'ABW', 'population': 103000},
         {'country': 'Afghanistan', 'population': 22720000},
@@ -111,6 +122,15 @@ class App extends React.Component {
             yAxis: {label: 'value'}
         }
 
+    };
+
+    lineChartConfig2={
+      width:800,
+      height:450,
+      x:'rpm',
+      charts:[{type:'line', lineStyle:'linear',y:'torque', color:'engineType'}],
+      tickAngle:-30,
+      minTickGap:1
     };
 
     barChartConfig = {
@@ -249,6 +269,17 @@ class App extends React.Component {
     };
 
     /********************************END OF CHART CONFIGS****************************************/
+
+
+    componentDidMount(){
+        setInterval(()=>{
+            this.dataSet1.data.merge([
+                {name:'1',pv:(Math.random()*100).toFixed(0),uv:(Math.random()*100).toFixed(0)},
+                {name:'2',pv:(Math.random()*100).toFixed(0),uv:(Math.random()*100).toFixed(0)}
+            ]);
+        },2000);
+    }
+
 
     render() {
         let test=this.data1.map((elem,i)=>{

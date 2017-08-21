@@ -25,6 +25,8 @@ import Topography from './MapComponents/Topography';
 import CountryInfo from './MapComponents/jsonMapFiles/countryInfo';
 import {scaleLinear} from 'd3-scale';
 
+import {CustomizedAxisLabel} from './helper';
+
 class ChartGenerator extends React.Component {
 
     constructor(props) {
@@ -106,7 +108,7 @@ class ChartGenerator extends React.Component {
                 <YAxis/>
                 <CartesianGrid strokeDasharray="3 3"/>
                 <Tooltip/>
-                <Legend/>
+                <Legend layout='vertical' align='right' verticalAlign='top'/>
                 <ReferenceLine y={0} stroke='#000'/>
 
                 {
