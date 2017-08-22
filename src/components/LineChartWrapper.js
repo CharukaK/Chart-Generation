@@ -57,14 +57,19 @@ export default class LineChartWrapper extends React.Component {
                 <YAxis
                     label={
                         <CustomizedAxisLabel
-                            y={charts[0].y}
-                            x={x}/>
+                            text={charts[0].y}/>
                     }
                 />
                 <CartesianGrid strokeDasharray="3 3"/>
                 <Tooltip content={<CustomToolTip  />}/>
                 <Legend layout='vertical' align='right'/>
                 <ReferenceLine y={0} stroke='#000'/>
+
+                {
+                    data2.map((line,i)=>{
+                        return <Line connectNulls={true} key={'line'+i} type="monotone" dataKey={line} stroke="#82ca9d" />;
+                    })
+                }
 
             </LineChart>
         );

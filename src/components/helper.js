@@ -35,3 +35,8 @@ export class CustomizedAxisLabel extends React.Component{
         );
     }
 }
+
+
+export const colorPalette=[
+
+];

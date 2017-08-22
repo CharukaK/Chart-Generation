@@ -273,7 +273,7 @@ class App extends React.Component {
 
     componentDidMount(){
         setInterval(()=>{
-            this.dataSet1.data.merge([
+            this.dataSet1.data.append([
                 {name:'1',pv:(Math.random()*100).toFixed(0),uv:(Math.random()*100).toFixed(0)},
                 {name:'2',pv:(Math.random()*100).toFixed(0),uv:(Math.random()*100).toFixed(0)}
             ]);
@@ -285,8 +285,12 @@ class App extends React.Component {
         let test=this.data1.map((elem,i)=>{
            let e={};
            e['uv']=elem.uv;
-           e[''+elem.name]=elem.pv;
+           this.keys2.map((key)=>{
+               if( key===elem.name) {
+                   e[key] = elem.pv;
 
+               }
+           });
            return e;
         });
         console.info(test);
@@ -340,7 +344,7 @@ class App extends React.Component {
                         {/*<Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{r: 8}}/>*/}
                         {/*<Line type="monotone" dataKey="uv" stroke="#82ca9d" />*/}
                         {this.keys2.map((k,i)=>{
-                           return <Line connectNulls={true} key={'anemanda'+i} type="monotone" dataKey={k} stroke="#82ca9d" />;
+                           return <Line connectNulls={false} key={'line'+i} type="monotone" dataKey={k} stroke="#82ca9d" />;
                         })}
                         {/*<Line type="monotone" dataKey="uv" stroke="#82ca9d" />*/}
                     </LineChart>
