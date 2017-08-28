@@ -1,28 +1,34 @@
-module.exports={
-    devtool:'source-map',
+module.exports = {
+    devtool: 'source-map',
     entry: './src/index.js',
     output: {
-        path: __dirname+'/public',
+        path: __dirname + '/public',
         filename: 'app.js'
     },
     module: {
         loaders: [
             {
-                test:/\.json$/,
-                loader:'json-loader'
+                test: /\.json$/,
+                loader: 'json-loader'
             },
             {
-                exclude: __dirname+'/node_modules',
-                test:/\.js$/,
+                exclude: __dirname + '/node_modules',
+                test: /\.js$/,
                 loader: 'babel-loader'
+            },
+
+            {
+                test: /\.css$/,
+                loader: 'style-loader!css-loader'
             }
+
         ]
     },
     devServer: {
-        contentBase:'./public',
+        contentBase: './public',
 
-        historyApiFallback:true,
-        inline:true,
-        port:9000
+        historyApiFallback: true,
+        inline: true,
+        port: 9000
     }
 };
