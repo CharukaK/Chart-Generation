@@ -6,8 +6,8 @@ class ScatterTest extends React.Component {
         super(props);
         this.state = {
             data: [
-                {name: 'Page A', uv: 100, pv: 100},
-                {name: 'Page B', uv: 200, pv: 100}
+                {name: 'Page A', uv: 100, pv: new Date().getTime()},
+                {name: 'Page B', uv: 200, pv: new Date().getTime()}
             ],
             timer: 0
         };
@@ -15,15 +15,21 @@ class ScatterTest extends React.Component {
 
     componentDidMount() {
         setInterval(() => {
+            let d=new Date();
+            console.info('timer',this.state.timer);
+            d.setDate(d.getDate()+this.state.timer);
+            console.info('time',d.getTime());
             for (let c = 0; c <1; c++) {
+
                 this.setState({
                     data: this.state.data.concat([
                         {
                             name: 'Page A',
                             uv: parseInt((Math.random() * 10000).toFixed(0)),
-                            pv: this.state.timer
+                            pv: d.getTime()
                         },
-                        {name: 'Page B', uv: parseInt((Math.random() * 10000).toFixed(0)), pv: this.state.timer }
+                        {name: 'Page B', uv: parseInt((Math.random() * 10000).toFixed(0)),
+                            pv: d.getTime() }
                     ])
                 });
             }
@@ -34,7 +40,7 @@ class ScatterTest extends React.Component {
                             {
                                 name: 'Page C',
                                 uv: parseInt((Math.random() * 10000).toFixed(0)),
-                                pv: this.state.timer
+                                pv: d.getTime()
                             }
                         ])
                     });
@@ -42,9 +48,9 @@ class ScatterTest extends React.Component {
             }
             this.setState({
 
-                timer: this.state.timer + 1000
+                timer: this.state.timer + 1
             });
-        }, 100);
+        }, 1000);
     }
 
     render() {
