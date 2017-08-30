@@ -28,12 +28,12 @@ class LineChart extends React.Component {
 
 
             let tmp = this.state.dataSet;
-            let dm={x:data.x,y:data.y};
+            let dm = {x: data.x, y: data.y};
 
             if (this.state.dataSet.has(data.category)) {
                 // console.info(tmp.get(data.category));
 
-                if(tmp.get(data.category).length>20){
+                if (tmp.get(data.category).length > 20) {
                     tmp.get(data.category).shift();
                 }
                 tmp.get(data.category).push(dm);
@@ -45,20 +45,21 @@ class LineChart extends React.Component {
                 dataSet: tmp
             });
         });
-
+        this.forceUpdate();
     }
 
-    legend=[{title:'rotary',color:'blue',disabled:false},{title:'piston',color:'red',disabled:false}];
+    legend = [{title: 'rotary', color: 'blue', disabled: false}, {title: 'piston', color: 'red', disabled: false}];
+
     render() {
 
 
         return (
 
-            <XYPlot height={500} width={800} animation={true}>
+            <XYPlot height={500} width={800} animation={true} xType="time">
 
                 <VerticalGridLines/>
                 <HorizontalGridLines/>
-                <XAxis title="rpm"/>
+                <XAxis title="time" tickFormat={this.myFormatter} tickTotal={10}/>
                 <YAxis title="torque"/>
                 <LineMarkSeries data={this.state.dataSet.get('Rotary')} color="blue">
                     <Hint/>
@@ -70,6 +71,52 @@ class LineChart extends React.Component {
 
         );
     }
+
+    myFormatter(t){
+        let m;
+        switch (t.getMonth()){
+            case 1:
+                m='january';
+                break;
+            case 2:
+                m='february';
+                break;
+            case 3:
+                m='march';
+                break;
+            case 4:
+                m='april';
+                break;
+            case 5:
+                m='may';
+                break;
+            case 6:
+                m='june';
+                break;
+            case 7:
+                m='july';
+                break;
+            case 8:
+                m='august';
+                break;
+            case 9:
+                m='september';
+                break;
+            case 10:
+                m='october';
+                break;
+            case 11:
+                m='november';
+                break;
+            case 12:
+                m='december';
+                break;
+
+        }
+
+        return t.getDate()+' '+m;
+    }
+
 }
 
 export default LineChart;

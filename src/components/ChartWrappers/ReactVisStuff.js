@@ -15,10 +15,13 @@ class ReactVisStuff extends React.Component {
 
     componentDidMount() {
         setInterval(() => {
+            let day=new Date();
+            day.setDate(day.getDate()+this.state.timer);
+            console.info(day);
             this.setState({
                 data: [
-                    {category:'Piston',x:this.state.timer,y:Math.round(Math.random()*100)},
-                    {category:'Rotary',x:this.state.timer,y:this.state.timer===20?null:Math.round(Math.random()*100)}
+                    {category:'Piston',x:day,y:Math.round(Math.random()*100)},
+                    {category:'Rotary',x:day,y:this.state.timer===20?null:Math.round(Math.random()*100)}
                 ],
                 timer:this.state.timer+1
             });
