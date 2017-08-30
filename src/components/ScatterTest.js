@@ -15,7 +15,7 @@ class ScatterTest extends React.Component {
 
     componentDidMount() {
         setInterval(() => {
-            for (let c = 0; c <20; c++) {
+            for (let c = 0; c <1; c++) {
                 this.setState({
                     data: this.state.data.concat([
                         {
@@ -27,8 +27,8 @@ class ScatterTest extends React.Component {
                     ])
                 });
             }
-            if (this.state.timer > 10000) {
-                for (let c = 0; c < 20; c++) {
+            if (this.state.timer > 100000) {
+                for (let c = 0; c < 1; c++) {
                     this.setState({
                         data: this.state.data.concat([
                             {
@@ -44,7 +44,7 @@ class ScatterTest extends React.Component {
 
                 timer: this.state.timer + 1000
             });
-        }, 1000);
+        }, 100);
     }
 
     render() {
