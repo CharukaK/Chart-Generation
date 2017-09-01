@@ -64,7 +64,7 @@ class LineChart extends React.Component {
                 <LineMarkSeries data={this.state.dataSet.get('Rotary')} color="blue">
                     <Hint/>
                 </LineMarkSeries>
-                <LineMarkSeries data={this.state.dataSet.get('Piston')} color="red"/>
+                <LineMarkSeries data={this.state.dataSet.get('Piston')} color="red" onValueClick={(event)=>{console.info(event);}}/>
                 <DiscreteColorLegend items={this.legend} orientation="horizontal"/>
 
             </XYPlot>
@@ -75,40 +75,40 @@ class LineChart extends React.Component {
     myFormatter(t){
         let m;
         switch (t.getMonth()){
-            case 1:
+            case 0:
                 m='january';
                 break;
-            case 2:
+            case 1:
                 m='february';
                 break;
-            case 3:
+            case 2:
                 m='march';
                 break;
-            case 4:
+            case 3:
                 m='april';
                 break;
-            case 5:
+            case 4:
                 m='may';
                 break;
-            case 6:
+            case 5:
                 m='june';
                 break;
-            case 7:
+            case 6:
                 m='july';
                 break;
-            case 8:
+            case 7:
                 m='august';
                 break;
-            case 9:
+            case 8:
                 m='september';
                 break;
-            case 10:
+            case 9:
                 m='october';
                 break;
-            case 11:
+            case 10:
                 m='november';
                 break;
-            case 12:
+            case 11:
                 m='december';
                 break;
 

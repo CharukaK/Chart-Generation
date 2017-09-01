@@ -2,6 +2,7 @@ import React from 'react';
 import '../../../node_modules/react-vis/dist/style.css';
 import LineChart from './LineChart';
 import Wrapper from './WrapperTest';
+import CandlestickExample from './CandleStick/CandleStickExample';
 
 class ReactVisStuff extends React.Component {
     constructor(props) {
@@ -69,7 +70,7 @@ class ReactVisStuff extends React.Component {
                 {/*</XYPlot>*/}
 
                 <Wrapper data={this.state.data} metadata={this.metadata} config={this.config}  />
-
+                <CandlestickExample/>
 
             </div>
 
