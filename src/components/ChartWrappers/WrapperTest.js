@@ -15,7 +15,7 @@ class WrapperTest extends React.Component {
         super(props);
         this.state = {
             dataSets: {},
-            shiftKey:0
+
         };
     }
 
@@ -68,7 +68,7 @@ class WrapperTest extends React.Component {
 
             this.setState({
                 dataSets:tmp,
-                shiftKey:this.state.shiftKey+1
+
             });
 
         });
