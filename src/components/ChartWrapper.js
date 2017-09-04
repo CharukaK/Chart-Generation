@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ChartWrapperSingle from "./ChartWrapperSingle";
+import ChartWrapperSingleTest from "./ChartWrapperSingleTest";
 
 
 class ChartWrapper extends React.Component {

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ReactVisTest</title>
+    <link rel="stylesheet" href="https://unpkg.com/react-vis/dist/style.css">
+    <script type="text/javascript" src="https://unpkg.com/react-vis/dist/dist.min.js"></script>
+</head>
+<body>
+    <div class="root"></div>
+    <script>
+        const {
+            HorizontalGridLines,
+            LineMarkSeries,
+            XYPlot,
+            XAxis,
+            YAxis,
+        } = reactVis;
+
+        let ReactDOM = require('react-dom');
+        let React= require('react');
+        const data = new Array(10).fill(0).reduce((prev, curr) => [...prev, {
+            x: prev.slice(-1)[0].x + 1,
+            y: prev.slice(-1)[0].y * (1 + Math.random() * 0.2)
+        }], [{ x: 0, y: 10 }]);
+
+        const Chart = () => (
+                <XYPlot
+                        width={window.innerWidth - 50}
+                        height={window.innerHeight - 50}>
+                    <XAxis/>
+                    <YAxis/>
+                    <HorizontalGridLines />
+                    <LineMarkSeries data={data} />
+                </XYPlot>
+        );
+
+        ReactDOM.render(<Chart />, document.querySelector('.root'))
+    </script>
+</body>
+</html>

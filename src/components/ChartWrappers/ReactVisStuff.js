@@ -3,6 +3,7 @@ import '../../../node_modules/react-vis/dist/style.css';
 import LineChart from './LineChart';
 import Wrapper from './WrapperTest';
 import CandlestickExample from './CandleStick/CandleStickExample';
+import PIeChartSample from "./PIeChartSample";
 
 class ReactVisStuff extends React.Component {
     constructor(props) {
@@ -39,7 +40,7 @@ class ReactVisStuff extends React.Component {
 
     config={
         x : 'x',
-        charts : [{type: 'line',  y : 'y', color: 'category'}],
+        charts : [{type:'bar',y:'y',color:'category'}],
         maxLength: 10,
         width: 800,
         height: 450
@@ -71,7 +72,7 @@ class ReactVisStuff extends React.Component {
 
                 <Wrapper data={this.state.data} metadata={this.metadata} config={this.config}  />
                 <CandlestickExample/>
-
+                <PIeChartSample/>
             </div>
 
         );

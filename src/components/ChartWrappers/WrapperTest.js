@@ -5,7 +5,9 @@ import {
     YAxis,
     LineMarkSeries,
     HorizontalGridLines,
-    VerticalGridLines
+    VerticalGridLines,
+    VerticalBarSeries,VerticalRectSeries,
+    AreaSeries
 } from 'react-vis';
 import '../../../node_modules/react-vis/dist/style.css';
 
@@ -58,7 +60,7 @@ class WrapperTest extends React.Component {
 
 
                     tmp[chart.type][d[chart.color]][tmp[chart.type][d[chart.color]].length-1]
-                        .push({x:d[config.x],y:d[chart.y],shiftKey:this.state.shiftKey});
+                        .push({x:d[config.x].getTime(),x0:d[config.x].getTime()-86400000,y:d[chart.y],shiftKey:this.state.shiftKey});
 
                 }else{
                     tmp[chart.type][d[chart.color]].push([]);
@@ -75,6 +77,8 @@ class WrapperTest extends React.Component {
 
     }
 
+    colors=['blue','red'];
+
 
     render() {
         let {config, metadata} = this.props;
@@ -87,10 +91,24 @@ class WrapperTest extends React.Component {
         Object.keys(this.state.dataSets).forEach((chartTypes)=>{
             switch (chartTypes){
                 case 'line':
-                    Object.keys(this.state.dataSets[chartTypes]).forEach((categories)=>{
-                       this.state.dataSets[chartTypes][categories].map((d,i)=>{
-                           chartComp.push(<LineMarkSeries data={d}/>);
+                    Object.keys(this.state.dataSets[chartTypes]).map((categories,i)=>{
+                       this.state.dataSets[chartTypes][categories].map((d,k)=>{
+                           chartComp.push(<LineMarkSeries data={d} color={this.colors[i]} curve="curveNatural"/>);
                        });
+                    });
+                    break;
+                case 'bar':
+                    Object.keys(this.state.dataSets[chartTypes]).map((categories,i)=>{
+                        this.state.dataSets[chartTypes][categories].map((d,k)=>{
+                            chartComp.push(<VerticalRectSeries opacity={0.5} data={d} color={this.colors[i]}/>);
+                        });
+                    });
+                    break;
+                case 'area':
+                    Object.keys(this.state.dataSets[chartTypes]).map((categories,i)=>{
+                        this.state.dataSets[chartTypes][categories].map((d,k)=>{
+                            chartComp.push(<AreaSeries data={d} color={this.colors[i]} opacity={0.5}/>);
+                        });
                     });
                     break;
 
@@ -102,18 +120,28 @@ class WrapperTest extends React.Component {
             <XYPlot
                 height={config.height}
                 width={config.width}
-                xType={metadata.types[metadata.names.indexOf(config.x)]}
-                animation={true}>
+                xType='time'
+                animation={true}
+                stackBy="y"
+
+            >
 
 
 
-                <XAxis/>
+                <XAxis tickTotal={10}/>
                 <YAxis/>
                 <HorizontalGridLines/>
                 <VerticalGridLines/>
                 {chartComp}
             </XYPlot>
         );
+    }
+
+    myFormatter(t){
+        let d=new Date();
+        d.setSeconds(t);
+        let m=['january','february','march','april','may','june','july','august','september','october','november','december'];
+        return d.getDate()+' '+m[d.getMonth()];
     }
 }
 

@@ -30,6 +30,8 @@ class LineChart extends React.Component {
             let tmp = this.state.dataSet;
             let dm = {x: data.x, y: data.y};
 
+
+
             if (this.state.dataSet.has(data.category)) {
                 // console.info(tmp.get(data.category));
 
