@@ -97,7 +97,10 @@ class ChartWrapperSingle extends React.Component {
                         height={config.height}
                         xType={metadata.types[metadata.names.indexOf(config.x)]}
                         animation={true}>
-
+                        <XAxis/>
+                        <YAxis/>
+                        <VerticalGridLines/>
+                        <HorizontalGridLines/>
                         {chartComp}
                     </XYPlot> :
                     <XYPlot
@@ -115,7 +118,7 @@ class ChartWrapperSingle extends React.Component {
 
 ChartWrapperSingle.propTypes = {
     config: PropTypes.object.isRequired,
-    metadata: PropTypes.array.isRequired,
+    metadata: PropTypes.object.isRequired,
     nextData:PropTypes.array
 };
 

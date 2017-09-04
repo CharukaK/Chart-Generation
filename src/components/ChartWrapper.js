@@ -15,8 +15,8 @@ class ChartWrapper extends React.Component {
             <div>
                 {
                     config.charts.length > 1 ?
-                        <ChartWrapperSingle metadata={metadata} config={config} data={data} /> :
-                        null
+                        null :
+                        <ChartWrapperSingle metadata={metadata} config={config} data={data} />
                 }
             </div>
 
