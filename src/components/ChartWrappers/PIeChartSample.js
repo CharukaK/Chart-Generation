@@ -23,7 +23,7 @@ export default class PIeChartSample extends React.Component {
                     xDomain={[-5, 5]}
                     yDomain={[-5, 5]}
                     width={800}
-                    height={800}>
+                    height={450}>
                     <VerticalGridLines/>
                     <HorizontalGridLines/>
                     <XAxis />

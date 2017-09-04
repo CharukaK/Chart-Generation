@@ -1,7 +1,8 @@
 import React from 'react';
 import Row from './RowComponent';
 import ChartWrapper from './ChartWrapper';
-
+import ScatterPlot from './ChartWrappers/Scatter';
+import PIeChartSample from "./ChartWrappers/PIeChartSample";
 
 
 class App extends React.Component{
@@ -28,8 +29,8 @@ class App extends React.Component{
         charts : [{type: 'line',  y : 'torque', color: 'EngineType'}],
         colorSet:this.colorSet,
         maxLength: 10,
-        width: 400,
-        height: 200
+        width: 800,
+        height: 450
     };
 
     barChartConfigVertical={
@@ -37,19 +38,27 @@ class App extends React.Component{
         charts : [{type: 'bar',  y : 'torque', color: 'EngineType'}],
         colorSet:this.colorSet,
         maxLength: 10,
-        width: 400,
-        height: 200,
+        width: 800,
+        height: 450,
         alignment:'vertical'
     };
-
-    barChartConfigHorizontal={
+    barChartConfigVerticalStacked={
         x : 'rpm',
-        charts : [{type: 'line',  y : 'torque', color: 'EngineType'}],
+        charts : [{type: 'bar',  y : 'torque', color: 'EngineType', mode:'stacked'}],
         colorSet:this.colorSet,
         maxLength: 10,
-        width: 400,
-        height: 200,
+        width: 800,
+        height: 450,
         alignment:'vertical'
+    };
+    barChartConfigHorizontal={
+        x : 'torque',
+        charts : [{type: 'bar',  y : 'rpm', color: 'EngineType'}],
+        colorSet:this.colorSet,
+        maxLength: 10,
+        width: 800,
+        height: 450,
+        alignment:'horizontal'
     };
     /**********************[END]Chart Configs***********************/
 
@@ -59,7 +68,7 @@ class App extends React.Component{
             this.setState({
                 timer:this.state.timer+1
             });
-        },500);
+        },2000);
     }
 
     render(){
@@ -70,9 +79,24 @@ class App extends React.Component{
                     <ChartWrapper metadata={this.metadata} data={this.data} config={this.lineChartConfig}/>
                 </Row>
 
-                <Row title="Bar Charts">
+                <Row title="Vertical Bar Chart">
                     <ChartWrapper metadata={this.metadata} data={this.data} config={this.barChartConfigVertical}/>
                 </Row>
+
+                <Row title="Horizontal Bar Chart">
+                    <ChartWrapper metadata={this.metadata} data={this.data} config={this.barChartConfigHorizontal}/>
+                </Row>
+
+                <Row title="Vertical Bar Chart Stacked">
+                    <ChartWrapper metadata={this.metadata} data={this.data} config={this.barChartConfigVerticalStacked}/>
+                </Row>
+                <Row title="Scatter Plot">
+                    <ScatterPlot/>
+                </Row>
+                <Row title="Arc Series">
+                    <PIeChartSample/>
+                </Row>
+
             </div>
         );
     }
