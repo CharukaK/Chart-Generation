@@ -54475,7 +54475,7 @@ var App = function (_React$Component) {
             charts: [{ type: 'line', y: 'torque', color: 'EngineType' }],
             colorSet: _this.colorSet,
             maxLength: 10,
-            width: 800,
+            width: 700,
             height: 450
         };
         _this.barChartConfigVertical = {
@@ -54483,7 +54483,7 @@ var App = function (_React$Component) {
             charts: [{ type: 'bar', y: 'torque', color: 'EngineType' }],
             colorSet: _this.colorSet,
             maxLength: 10,
-            width: 800,
+            width: 700,
             height: 450,
             alignment: 'vertical'
         };
@@ -54492,7 +54492,7 @@ var App = function (_React$Component) {
             charts: [{ type: 'bar', y: 'torque', color: 'EngineType', mode: 'stacked' }],
             colorSet: _this.colorSet,
             maxLength: 10,
-            width: 800,
+            width: 700,
             height: 450,
             alignment: 'vertical'
         };
@@ -54501,9 +54501,27 @@ var App = function (_React$Component) {
             charts: [{ type: 'bar', y: 'rpm', color: 'EngineType' }],
             colorSet: _this.colorSet,
             maxLength: 10,
-            width: 800,
+            width: 700,
             height: 450,
             alignment: 'horizontal'
+        };
+        _this.areaChartConfig = {
+            x: 'rpm',
+            charts: [{ type: 'area', y: 'torque', color: 'EngineType' }],
+            colorSet: _this.colorSet,
+            maxLength: 10,
+            width: 700,
+            height: 450
+
+        };
+        _this.areaChartConfigStacked = {
+            x: 'rpm',
+            charts: [{ type: 'area', y: 'torque', color: 'EngineType', mode: 'stacked' }],
+            colorSet: _this.colorSet,
+            maxLength: 10,
+            width: 700,
+            height: 450
+
         };
 
         _this.state = {
@@ -54517,6 +54535,7 @@ var App = function (_React$Component) {
 
     _createClass(App, [{
         key: 'componentDidMount',
+
 
         /**********************[END]Chart Configs***********************/
 
@@ -54564,6 +54583,16 @@ var App = function (_React$Component) {
                     _RowComponent2.default,
                     { title: 'Vertical Bar Chart Stacked' },
                     _react2.default.createElement(_ChartWrapper2.default, { metadata: this.metadata, data: this.data, config: this.barChartConfigVerticalStacked })
+                ),
+                _react2.default.createElement(
+                    _RowComponent2.default,
+                    { title: 'Area Chart' },
+                    _react2.default.createElement(_ChartWrapper2.default, { metadata: this.metadata, data: this.data, config: this.areaChartConfig })
+                ),
+                _react2.default.createElement(
+                    _RowComponent2.default,
+                    { title: 'Area Chart Stacked' },
+                    _react2.default.createElement(_ChartWrapper2.default, { metadata: this.metadata, data: this.data, config: this.areaChartConfigStacked })
                 ),
                 _react2.default.createElement(
                     _RowComponent2.default,
@@ -54889,6 +54918,15 @@ var ChartWrapperSingle = function (_React$Component) {
                                 chartComp.push(_react2.default.createElement(_reactVis.HorizontalBarSeries, { opacity: 0.7, key: 'line_' + category + '_' + i, data: dat,
                                     color: _this2.state.colorSet[Object.keys(_this2.state.data).indexOf(category)] }));
                             }
+                            stacked = config.charts[0].mode === 'stacked';
+                            break;
+                        case 'area':
+                            chartComp.push(_react2.default.createElement(_reactVis.AreaSeries, {
+                                opacity: 0.7, key: 'line_' + category + '_' + i, data: dat,
+                                color: _this2.state.colorSet[Object.keys(_this2.state.data).indexOf(category)],
+                                onValueMouseOver: _this2.rememberValue,
+                                onValueMouseOut: _this2.forgetValue
+                            }));
                             stacked = config.charts[0].mode === 'stacked';
                             break;
                     }

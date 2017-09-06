@@ -29,7 +29,7 @@ class App extends React.Component{
         charts : [{type: 'line',  y : 'torque', color: 'EngineType'}],
         colorSet:this.colorSet,
         maxLength: 10,
-        width: 800,
+        width: 700,
         height: 450
     };
 
@@ -38,7 +38,7 @@ class App extends React.Component{
         charts : [{type: 'bar',  y : 'torque', color: 'EngineType'}],
         colorSet:this.colorSet,
         maxLength: 10,
-        width: 800,
+        width: 700,
         height: 450,
         alignment:'vertical'
     };
@@ -47,7 +47,7 @@ class App extends React.Component{
         charts : [{type: 'bar',  y : 'torque', color: 'EngineType', mode:'stacked'}],
         colorSet:this.colorSet,
         maxLength: 10,
-        width: 800,
+        width: 700,
         height: 450,
         alignment:'vertical'
     };
@@ -56,10 +56,30 @@ class App extends React.Component{
         charts : [{type: 'bar',  y : 'rpm', color: 'EngineType'}],
         colorSet:this.colorSet,
         maxLength: 10,
-        width: 800,
+        width: 700,
         height: 450,
         alignment:'horizontal'
     };
+    areaChartConfig={
+        x : 'rpm',
+        charts : [{type: 'area',  y : 'torque', color: 'EngineType'}],
+        colorSet:this.colorSet,
+        maxLength: 10,
+        width: 700,
+        height: 450,
+
+    };
+
+    areaChartConfigStacked={
+        x : 'rpm',
+        charts : [{type: 'area',  y : 'torque', color: 'EngineType', mode:'stacked'}],
+        colorSet:this.colorSet,
+        maxLength: 10,
+        width: 700,
+        height: 450,
+
+    };
+
     /**********************[END]Chart Configs***********************/
 
     componentDidMount(){
@@ -90,6 +110,14 @@ class App extends React.Component{
                 <Row title="Vertical Bar Chart Stacked">
                     <ChartWrapper metadata={this.metadata} data={this.data} config={this.barChartConfigVerticalStacked}/>
                 </Row>
+
+                <Row title="Area Chart">
+                    <ChartWrapper metadata={this.metadata} data={this.data} config={this.areaChartConfig}/>
+                </Row>
+                <Row title="Area Chart Stacked">
+                    <ChartWrapper metadata={this.metadata} data={this.data} config={this.areaChartConfigStacked}/>
+                </Row>
+
                 <Row title="Scatter Plot">
                     <ScatterPlot/>
                 </Row>

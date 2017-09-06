@@ -12,6 +12,7 @@ import {
     HorizontalBarSeries,
     HorizontalRectSeries,
     ArcSeries,
+    AreaSeries,
     Hint,
     DiscreteColorLegend
 } from 'react-vis';
@@ -138,6 +139,17 @@ class ChartWrapperSingle extends React.Component {
                                                      color={this.state.colorSet[Object.keys(this.state.data).indexOf(category)]}/>
                             );
                         }
+                        stacked=config.charts[0].mode==='stacked';
+                        break;
+                    case 'area':
+                        chartComp.push(
+                            <AreaSeries
+                                opacity={0.7} key={`line_${category}_${i}`} data={dat}
+                                color={this.state.colorSet[Object.keys(this.state.data).indexOf(category)]}
+                                onValueMouseOver={this.rememberValue}
+                                onValueMouseOut={this.forgetValue}
+                            />
+                        );
                         stacked=config.charts[0].mode==='stacked';
                         break;
                 }
